@@ -3,7 +3,7 @@ angular.module('app').controller('clientCtrl', clientCtrl);
 function clientCtrl() {
 
     var vm = this;
-    
+
     vm.messages = [
         {
             'username': 'username1',
