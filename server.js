@@ -1,6 +1,6 @@
 var cluster = require('cluster'); // Only required if you want the worker id
 var sticky = require('socketio-sticky-session');
-var port = 8000;
+var port = process.env.PORT || 3000;
 sticky(function() {
     // This code will be executed only in slave workers
 
