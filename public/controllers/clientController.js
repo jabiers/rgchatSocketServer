@@ -4,6 +4,7 @@ function clientCtrl() {
 
     var vm = this;
 
+    
     vm.messages = [
         {
             'username': 'username1',
