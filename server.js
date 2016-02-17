@@ -1,15 +1,22 @@
 var port = process.env.PORT || 3000;
-var app = require('express')(),
+var express = require('express'),
+    app = express(),
     http = require('http').Server(app),
     io = require('socket.io')(http);
 
 var redis = require('socket.io-redis');
 io.adapter(redis({ host: 'syno.ml', port: 6379 }));
 
+app.use(express.static('public'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/views/index.html');
 });
 
+app.get('/client', function(req, res){
+    res.sendFile(__dirname + '/public/views/client.html');
+});
 var nameSpaces = ['/aaaa', '/bbbb'];
 
 nameSpaces.forEach(function(nsp) {

@@ -1,0 +1,35 @@
+<html ng-app="app" ng-controller="clientCtrl">
+<head>
+    <title>Hello World in AngularJS</title>
+    <!-- Dependencies -->
+    <script src="bower_components/lodash/dist/lodash.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/angular/angular.js"></script>
+
+    <!-- Simple Chat -->
+    <!--<link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/style.css">-->
+    <!--<script src="bower_components/angular-bootstrap-simple-chat/src/scripts/index.js"></script>-->
+
+    <!--<irontec-simple-chat-->
+            <!--messages="vm.messages"-->
+            <!--username="vm.username"-->
+            <!--input-placeholder-text="You can write here"-->
+            <!--submit-button-text="Send your message"-->
+            <!--title="Super Awesome Chat"-->
+            <!--theme="material"-->
+            <!--submit-function="vm.sendMessage"-->
+            <!--visible="vm.visible"-->
+            <!--expand-on-new="vm.expandOnNew">-->
+    <!--</irontec-simple-chat>-->
+</head>
+<body>
+{{vm.messages}}
+
+</body>
+<script src="app.js"></script>
+<script src="controllers/clientController.js"></script>
+
+</html>
