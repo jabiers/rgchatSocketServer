@@ -17,6 +17,11 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     res.sendFile(__dirname + '/public/views/client.html');
 });
+
+app.get('/client2', function(req, res){
+    res.sendFile(__dirname + '/public/views/client2.html');
+});
+
 var nameSpaces = ['/aaaa', '/bbbb'];
 
 nameSpaces.forEach(function(nsp) {
