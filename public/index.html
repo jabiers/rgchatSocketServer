@@ -55,7 +55,7 @@
   	this.Room = "";
 
   	this.Connect = function(nick, namespace, room){
-  		socket =  io.connect('http://localhost:8000/' + namespace);
+  		socket =  io.connect('http://localhost/' + namespace);
   		Nickname = nick;
   		Room = room;
   		//conectarse
