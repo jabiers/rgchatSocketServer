@@ -64,4 +64,4 @@ io.sockets.on('connection', function(client){
 
 });
 
-server.listen(port);
+http.listen(port);
