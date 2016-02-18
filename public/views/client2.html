@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="rgchat">
 <head>
-  <meta charset="UTF-8">
-  <title>
-    AngularJS+Bootstrap Simple Chat Directive Sample
-  </title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link
+    <meta charset="UTF-8">
+    <title>
+        AngularJS+Bootstrap Simple Chat Directive Sample
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link
     rel="stylesheet"
-    href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link
+    href="bootstrap/dist/css/bootstrap.min.css">
+    <link
     rel="stylesheet"
     href="src/css/style.css">
 
@@ -17,35 +17,40 @@
     rel="stylesheet"
     href="src/css/themes.css">
 
-  <link
+    <link
     rel="stylesheet"
-    href="style.css">
+    href="views/style.css">
 </head>
 <body ng-controller="clientCtrl as vm">
 
-  <div class="chat-container">
-    <irontec-simple-chat
+    <div class="chat-container">
+        <irontec-simple-chat
+        id='rgchat'
         messages="vm.messages"
         username="vm.username"
         input-placeholder-text="메세지를 입력하세요."
         submit-button-text="보내기"
         title="RG Chat"
-        theme="material"
+        theme="default"
         submit-function="vm.sendMessage"
         visible="true">
     </irontec-simple-chat>
-  </div>
+
+    <!-- 테마 바꾸기용 jquery
+    $('#rgchat').removeClass(function (index, css) {
+    return (css.match (/(^|\s)chat-th-\S+/g) || []).join(' ');
+}).addClass('chat-th-irontec'); -->
+</div>
 
 
-  <script src="bower_components/lodash/dist/lodash.js"></script>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
+<script src="lodash/lodash.js"></script>
+<script src="jquery/dist/jquery.js"></script>
+<script src="angular/angular.js"></script>
+<script src="scripts/index.js"></script>
+<script src="scripts/templates.js"></script>
 
-  <script src="src/scripts/index.js"></script>
-  <script src="src/scripts/templates.js"></script>
-
-  <script src="app.js"></script>
-  <script src="controllers/clientController.js"></script>
+<script src="app.js"></script>
+<script src="controllers/clientController.js"></script>
 
 </body>
 </html>

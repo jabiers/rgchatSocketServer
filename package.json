@@ -13,14 +13,18 @@
     "url": "git+https://github.com/jabiers/rgchatSocketServer.git"
   },
   "author": "Daehyun Kim",
-  "license": "ISC",
+  "license": "Apache",
   "bugs": {
     "url": "https://github.com/jabiers/rgchatSocketServer/issues"
   },
   "homepage": "https://github.com/jabiers/rgchatSocketServer#readme",
   "dependencies": {
+    "angular": "^1.5.0",
     "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
     "express": "^4.13.4",
+    "jquery": "^2.2.0",
+    "lodash": "^4.5.0",
     "method-override": "^2.3.5",
     "socket.io": "^1.4.5",
     "socket.io-redis": "^1.0.0",
@@ -28,8 +32,7 @@
     "sticky-session": "^1.0.2"
   },
   "noAnalyze": true,
-  "license": "Apache",
   "engines": {
-      "node": "~0.10.0 || ~0.12.0 || ~4.2.0"
-    }
+    "node": "~0.10.0 || ~0.12.0 || ~4.2.0"
+  }
 }

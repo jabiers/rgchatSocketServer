@@ -1,25 +1,25 @@
 /* line 11, ../sass/themes.scss */
-.chat-th-irontec .chat-top-bar {
+.chat-th-default .chat-top-bar {
   background: #c33;
   color: #fff;
 }
 /* line 17, ../sass/themes.scss */
-.chat-th-irontec .chat-msg-receive .chat-msg-author {
+.chat-th-default .chat-msg-receive .chat-msg-author {
   color: #c33;
 }
 /* line 23, ../sass/themes.scss */
-.chat-th-irontec .chat-input:focus {
+.chat-th-default .chat-input:focus {
   border-color: #c33;
   box-shadow: 0 1px 1px #fff inset, 0 0 8px #c33;
   outline: 0 none;
 }
 /* line 30, ../sass/themes.scss */
-.chat-th-irontec .chat-submit-button {
+.chat-th-default .chat-submit-button {
   background: #c33;
   color: #fff;
 }
 /* line 34, ../sass/themes.scss */
-.chat-th-irontec .chat-submit-button:focus {
+.chat-th-default .chat-submit-button:focus {
   border-color: #c33;
   outline: 0 none;
 }

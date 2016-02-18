@@ -8,7 +8,12 @@ var redis = require('socket.io-redis');
 io.adapter(redis({ host: 'syno.ml', port: 6379 }));
 
 app.use(express.static('public'));
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+
+app.use('/angular',  express.static(__dirname + '/node_modules/angular'));
+app.use('/jquery',  express.static(__dirname + '/node_modules/jquery'));
+app.use('/bootstrap',  express.static(__dirname + '/node_modules/bootstrap'));
+app.use('/lodash',  express.static(__dirname + '/node_modules/lodash'));
+app.use('/scripts', express.static(__dirname + '/public/src/scripts'));
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/views/index.html');
