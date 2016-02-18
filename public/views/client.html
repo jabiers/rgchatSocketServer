@@ -2,27 +2,27 @@
 <html lang="en" ng-app="rgchat">
 <head>
     <meta charset="UTF-8">
+    <base href="/client">
     <title>
         AngularJS+Bootstrap Simple Chat Directive Sample
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link
     rel="stylesheet"
-    href="bootstrap/dist/css/bootstrap.min.css">
+    href="/bootstrap/dist/css/bootstrap.min.css">
     <link
     rel="stylesheet"
-    href="src/css/chatstyle.css">
+    href="/src/css/chatstyle.css">
 
     <link
     rel="stylesheet"
-    href="src/css/themes.css">
+    href="/src/css/themes.css">
 
     <link
     rel="stylesheet"
-    href="src/css/style.css">
+    href="/src/css/style.css">
 </head>
 <body ng-controller="clientCtrl as vm">
-    <input id='token' ng-model="vm.token" type='hidden' ></input>
     <div class="chat-container">
         <rgchat-advice-chat
         id='rgchat'
@@ -45,30 +45,11 @@
 <script src="/lodash/lodash.js"></script>
 <script src="/jquery/dist/jquery.js"></script>
 <script src="/angular/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 <script src="/scripts/index.js"></script>
 <script src="/scripts/templates.js"></script>
 
-<script src="app.js"></script>
-<script src="controllers/clientController.js"></script>
-<!-- <script src="routes/clientRoute.js"></script> -->
-<script>
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-$(document).ready(function () {
-    // code here
-    $('#token').val(getParameterByName('token')); // "lorem"
-    $('#token').trigger('input');
-
-});
-
-</script>
+<script src="/clientApp.js"></script>
 
 </body>
 </html>
