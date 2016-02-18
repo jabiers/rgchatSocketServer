@@ -1,35 +1,74 @@
-<html ng-app="app" ng-controller="clientCtrl">
+<!DOCTYPE html>
+<html lang="en" ng-app="rgchat">
 <head>
-    <title>Hello World in AngularJS</title>
-    <!-- Dependencies -->
-    <script src="bower_components/lodash/dist/lodash.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>
+        AngularJS+Bootstrap Simple Chat Directive Sample
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link
+    rel="stylesheet"
+    href="bootstrap/dist/css/bootstrap.min.css">
+    <link
+    rel="stylesheet"
+    href="src/css/chatstyle.css">
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="bower_components/angular/angular.js"></script>
+    <link
+    rel="stylesheet"
+    href="src/css/themes.css">
 
-    <!-- Simple Chat -->
-    <!--<link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/style.css">-->
-    <!--<script src="bower_components/angular-bootstrap-simple-chat/src/scripts/index.js"></script>-->
-
-    <!--<irontec-simple-chat-->
-            <!--messages="vm.messages"-->
-            <!--username="vm.username"-->
-            <!--input-placeholder-text="You can write here"-->
-            <!--submit-button-text="Send your message"-->
-            <!--title="Super Awesome Chat"-->
-            <!--theme="material"-->
-            <!--submit-function="vm.sendMessage"-->
-            <!--visible="vm.visible"-->
-            <!--expand-on-new="vm.expandOnNew">-->
-    <!--</irontec-simple-chat>-->
+    <link
+    rel="stylesheet"
+    href="src/css/style.css">
 </head>
-<body>
-{{vm.messages}}
+<body ng-controller="clientCtrl as vm">
+    <input id='token' ng-model="vm.token" type='hidden' ></input>
+    <div class="chat-container">
+        <rgchat-advice-chat
+        id='rgchat'
+        messages="vm.messages"
+        username="vm.username"
+        input-placeholder-text="메세지를 입력하세요."
+        submit-button-text="보내기"
+        title="RG Chat"
+        theme="default"
+        submit-function="vm.sendMessage"
+        visible="true">
+    </rgchat-advice-chat>
 
-</body>
+
+    <!-- 테마 바꾸기용 jquery
+    $('#rgchat').removeClass(function (index, css) {
+    return (css.match (/(^|\s)chat-th-\S+/g) || []).join(' ');
+}).addClass('chat-th-irontec'); -->
+</div>
+<script src="/lodash/lodash.js"></script>
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/angular/angular.js"></script>
+<script src="/scripts/index.js"></script>
+<script src="/scripts/templates.js"></script>
+
 <script src="app.js"></script>
 <script src="controllers/clientController.js"></script>
+<!-- <script src="routes/clientRoute.js"></script> -->
+<script>
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+$(document).ready(function () {
+    // code here
+    $('#token').val(getParameterByName('token')); // "lorem"
+    $('#token').trigger('input');
 
+});
+
+</script>
+
+</body>
 </html>

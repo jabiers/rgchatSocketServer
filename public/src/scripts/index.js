@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	angular.module('irontec.simpleChat', []);
-	angular.module('irontec.simpleChat').directive('irontecSimpleChat', ['$timeout', SimpleChat]);
+	angular.module('rgchat.adviceClient', []);
+	angular.module('rgchat.adviceClient').directive('rgchatAdviceChat', ['$timeout', SimpleChat]);
 
 	function SimpleChat($timeout) {
 		var directive = {

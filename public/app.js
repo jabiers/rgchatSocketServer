@@ -1,1 +1,1 @@
-angular.module('rgchat', ['irontec.simpleChat']);
+angular.module('rgchat', ['rgchat.adviceClient']);

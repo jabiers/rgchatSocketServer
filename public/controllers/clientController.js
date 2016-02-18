@@ -44,4 +44,5 @@ function clientCtrl() {
     };
     vm.visible = true;
     vm.expandOnNew = true;
+    vm.foo = 'abcd';
 }
