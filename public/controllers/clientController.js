@@ -23,34 +23,12 @@ function clientCtrl($location, mySocket) {
                 socket = mySocket.connect('/' + token);
                 socket.user = {isClient:true, username:username};
                 socketConnected = true;
-
-                pushMessages('System', '\'' + vm.username + '\'님이 접속하셨습니다.');
             }
 
-            socket.emit("user:waiting", {message: message, username:username} , function(res) {
-                // $("#board").append("<p>" + Nickname + ": " + msg + "</p>");
-                console.log(res);
+            mySocket.emit("user:waiting", {message: message, username:username} , function(res) {
                 pushMessages(res.username, res.message);
-
             });
         }
-
-        // socket.on('connect',function (data) {
-        //     console.log('connect');
-        //     mySocket.emit('setNickAndRoom', {nick: vm.username, room: 'aa'}, function(response){
-        //         vm.messages.push({
-        //             'username': 'System',
-        //             'content': vm.username + '님이 접속하셨습니다.'
-        //         });
-        //     });
-        // });
-        //mensajes
-        // socket.on("message", function(msg, p, c){
-        //     vm.messages.push({
-        //         'username': msg.username,
-        //         'content': msg.content
-        //     });
-        // });
     };
 
     vm.visible = true;

@@ -42,8 +42,8 @@ nameSpaces.forEach(function(nsp) {
         client.on("user:waiting", function (message, next) {
             //msg = {message: message, username:username}
             client.join("waiting");
-            console.log('waiting');
             console.log(client.user);
+
             next(message);
         });
 
