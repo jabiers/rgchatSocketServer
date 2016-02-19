@@ -75,7 +75,6 @@ angular.module('btford.socket-io', []).
               socket = io.connect(namespace || '/');
             return socket;
           },
-
           // when socket.on('someEvent', fn (data) { ... }),
           // call scope.$broadcast('someEvent', data)
           forward: function (events, scope) {

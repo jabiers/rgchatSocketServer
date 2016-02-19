@@ -1,4 +1,4 @@
-angular.module('rgchat', ['rgchat.adviceClient', 'ngRoute','btford.socket-io']);
+angular.module('rgchat.client', ['rgchat.adviceClient', 'ngRoute','btford.socket-io']);
 document.writeln('<script src="/controllers/clientController.js"></script>');
 document.writeln('<script src="/routes/clientRoute.js"></script>');
 document.writeln('<script src="/services/clientService.js"></script>');

@@ -2,7 +2,8 @@ var port = process.env.PORT || 3000;
 var express = require('express'),
 app = express(),
 http = require('http').Server(app),
-io = require('socket.io')(http);
+io = require('socket.io')(http),
+moment = require('moment');
 
 var redis = require('socket.io-redis');
 io.adapter(redis({ host: 'syno.ml', port: 6379 }));
@@ -20,50 +21,63 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/views/index.html');
 });
 
-// app.get('/client', function(req, res){
-//     res.sendFile(__dirname + '/public/views/client.html');
-// });
-
 app.get('/client', function(req, res){
     res.sendFile(__dirname + '/public/views/client.html');
 });
-app.get('/client/:token', function(req, res){
-    res.sendFile(__dirname + '/public/views/client.html');
+
+app.get('/admin', function(req, res){
+    res.sendFile(__dirname + '/public/views/admin.html');
 });
 
 var nameSpaces = ['/aaaa', '/bbbb', '/syno'];
-
+var users = {};
 nameSpaces.forEach(function(nsp) {
     console.log(nsp);
     var nameSpace = io.of(nsp);
     var Room;
     nameSpace.on('connection', function(client){
-
-        client.on("user:waiting", function (message, next) {
+        client.on("client connected", function (data, next) {
+            //사용자가 접속했다는 정보를 받음
             //msg = {message: message, username:username}
-            client.join("waiting");
-            console.log(client.user);
+            console.log(data);
+            users[client.id] = client;
+            users[client.id].info = {
+                id:client.id,
+                channel: data.channel,
+                lastmessage: "",
+                updatedate: moment().format("MMM Do YY")
+            }
 
-            next(message);
+            io.emit('client connected', users[client.id].info);
+
+            if (next) {
+                next(data);
+            }
+
         });
+        client.on("send message to agent from client", function (data, next) {
+            //사용자가 상담을 하기 위해 글을 남김
+            //글만 남겼을 경우?
+            //연결된 상담원이 있을 경우?
+            // {message: message, username:username}
+            console.log("메세지를 받았다. 그래서 상담사들한테 메시지를 보낸다.");
+            users[client.id].info.lastmessage = data.message;
+            data.id = client.id;
+            data.info = users[client.id].info;
+            io.emit('receive message from client', data);
 
-        client.on("setNickAndRoom", function(nick, fn){
-            fn({msg : "Hello " + nick.nick});
-            client.join(nick.room);
-            Room = nick.room;
-            client.broadcast.to(Room).json.send({ msg: "Se conecto al room: " + nick.room, nick : nick });
-        });
-
-        client.on('message', function(message, fn){
-            var msg = message; //{ message: [client.sessionId, message] };
-            buffer.push(msg);
-            if (buffer.length > 15)
-            buffer.shift();
-            client.broadcast.to(Room).json.send(msg);
-            fn(msg);
+            console.log(data);
+            if (next) {
+                next(data);
+            }
+            // pushMessages(res.username, res.message);
         });
 
         client.on('disconnect', function(){
+            //사용자의 접속이 완료됨
+            console.log(client.id);
+            io.emit('client disconnected', users[client.id].info);
+            delete users[client.id];
             client.broadcast.to(Room).json.send({ msg: "Se desconecto"});
         });
     });
@@ -71,36 +85,60 @@ nameSpaces.forEach(function(nsp) {
 } );
 //
 // var buffer = [];
-// io.sockets.on('connection', function(client){
-//     console.log('a User Connected');
-//     var Room = "";
-//
-//     client.on("user:waiting", function (message, callback) {
-//         //msg = {message: message, username:username}
-//         client.join("waiting");
-//         console.log(client.user);
-//     });
-//
-//     client.on("setNickAndRoom", function(nick, fn){
-//         fn({msg : "Hello " + nick.nick});
-//         client.join(nick.room);
-//         Room = nick.room;
-//         client.broadcast.to(Room).json.send({ msg: "Se conecto al room: " + nick.room, nick : nick });
-//     });
-//
-//     client.on('message', function(message, fn){
-//         var msg = message; //{ message: [client.sessionId, message] };
-//         buffer.push(msg);
-//         if (buffer.length > 15)
-//         buffer.shift();
-//         client.broadcast.to(Room).json.send(msg);
-//         fn(msg);
-//     });
-//
-//     client.on('disconnect', function(){
-//         client.broadcast.to(Room).json.send({ msg: "Se desconecto"});
-//     });
-//
-// });
+io.sockets.on('connection', function(client){
+    var Room = "";
+
+    //현재 유저들의 정보 (및 기존 저장된 정보를 보내줘야함)
+    //현재부터 연결된 사용자만 보여주자 끝난 경우 저장된 정보를 보여주도록 하자
+
+    client.on("send message to client", function (data, next) {
+        //data 에 있는 target 정보를 통해서 emit 해야함
+        console.log('send message');
+        console.log(io.of('/syno'));
+        io.of('/syno').emit('admin:connect agent', data);
+        // mySocket.on("admin:connect agent", function(res) {
+        //     pushMessages(res.username, "'님'과 상담을 시작합니다.");
+        // });
+
+        console.log("send message");
+        if (next) {
+            next(data);
+        }
+    });
+
+
+    client.on("get connected users", function (data, next) {
+        //연결된 사용자 정보를 업데이트 한다.
+        //연결된 agent 의 채널의 사용자만 넘긴다.
+
+        var connectedUsers = [];
+        for (var id in users) {
+            if (1) { // TODO : 내가 허용된 채널일 경우
+                connectedUsers.push(users[id].info);
+            }
+        }
+
+        if (next) {
+            console.log('get connected users');
+            next(connectedUsers);
+        }
+    });
+
+    client.on('disconnect', function(){
+        //관리자가 종료되면... 할게 잇나??
+        client.broadcast.to(Room).json.send({ msg: "Se desconecto"});
+    });
+
+});
 
 http.listen(port);
+
+
+// mySocket.on("admin:connect agent", function(res) {
+//     pushMessages(res.username, "'님'과 상담을 시작합니다.");
+// });
+//
+// mySocket.on("chat:receive message", function(res) {
+//     pushMessages(res.username, res.message);
+// });
+//

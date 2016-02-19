@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rgchat.admin">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="/admin">
+    <title>
+        AngularJS+Bootstrap Simple Chat Directive Sample
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link
+    rel="stylesheet"
+    href="/bootstrap/dist/css/bootstrap.min.css">
+    <link
+    rel="stylesheet"
+    href="/src/css/chatstyle.css">
+
+    <link
+    rel="stylesheet"
+    href="/src/css/themes.css">
+
+    <link
+    rel="stylesheet"
+    href="/src/css/style.css">
+
+    <link
+    rel="stylesheet"
+    href="/src/css/panelStyle.css">
+</head>
+<body ng-controller="adminCtrl as vm">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="row msg-container" ng-repeat="user in vm.users" ng-click="vm.selectUser(user)">
+                <div class="col-md-12 col-xs-12" ng-click="selectUser(user.username)">
+                    <div class="chat-msg" ng-click="selectUser(user.username)">
+                        <!-- <img ng-if="message.imageUrl" class="profile" ng-class="{'pull-right': selfAuthored, 'pull-left': !selfAuthored}" ng-src="{{message.imageUrl}}" /> -->
+                        <p>{{user.channel}}</p>
+                        <div class="chat-msg-author">
+                            <strong>{{user.lastmessage}}</strong>&nbsp;
+                            <span class="date">{{user.updatedate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <rgchat-advice-chat
+            id='rgchat'
+            messages="vm.messages"
+            username="vm.agentname"
+            input-placeholder-text="메세지를 입력하세요."
+            submit-button-text="보내기"
+            title="RG Chat"
+            theme="default"
+            submit-function="vm.sendMessage"
+            visible="true">
+        </rgchat-advice-chat>
+
+        <!-- 테마 바꾸기용 jquery
+        $('#rgchat').removeClass(function (index, css) {
+        return (css.match (/(^|\s)chat-th-\S+/g) || []).join(' ');
+    }).addClass('chat-th-irontec'); -->
+</div>
+</div>
+<script src="/lodash/lodash.js"></script>
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/angular/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+<script src="/scripts/index.js"></script>
+<script src="/scripts/templates.js"></script>
+
+<script src="/adminApp.js"></script>
+
+</body>
+</html>
