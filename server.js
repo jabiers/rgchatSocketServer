@@ -35,6 +35,13 @@ var chatController = require('./server/controllers/chatHistory.Controller');
 // Express Routing & Setting
 //---------------------------------------------
 
+app.get('*', function(req, res, next) {
+ console.log('옴');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+
+});
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 app.use('/angular', express.static(__dirname + '/node_modules/angular'));
