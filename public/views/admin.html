@@ -34,14 +34,14 @@
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <div class="row msg-container" ng-repeat="user in vm.users" ng-click="vm.selectUser(user)">
-                <div class="col-md-12 col-xs-12" ng-click="selectUser(user.username)">
-                    <div class="chat-msg" ng-click="selectUser(user.username)">
+            <div class="row msg-container" ng-repeat="chatHistory in vm.chatHistory" ng-click="vm.selectUser(chatHistory)">
+                <div class="col-md-12 col-xs-12" ng-click="selectUser(chatHistory.username)">
+                    <div class="chat-msg" ng-click="selectUser(chatHistory.username)">
                         <!-- <img ng-if="message.imageUrl" class="profile" ng-class="{'pull-right': selfAuthored, 'pull-left': !selfAuthored}" ng-src="{{message.imageUrl}}" /> -->
-                        <p>{{user.channel}}</p>
+                        <p>{{chatHistory.channel}}</p>
                         <div class="chat-msg-author">
-                            <strong>{{user.lastmessage}}</strong>&nbsp;
-                            <span class="date">{{user.updatedate}}</span>
+                            <strong>{{chatHistory.lastmessage}}</strong>&nbsp;
+                            <span class="date">{{chatHistory.updated || chatHistory.finished}}</span>
                         </div>
                     </div>
                 </div>
