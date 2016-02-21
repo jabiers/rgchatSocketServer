@@ -9,7 +9,8 @@ function adminCtrl($http, mySocket) {
 
     vm.agentname = '관리자';
     vm.chatHistory = [];
-    vm.chatHistoryId;
+    var chatHistoryId;
+    var selectedClientId;
     socketConnect();
 
 
@@ -30,7 +31,8 @@ function adminCtrl($http, mySocket) {
     vm.selectUser = function (chatHistory) {
         console.log(chatHistory);
         console.log(chatHistory._id);
-        vm.chatHistoryId = chatHistory._id;
+        chatHistoryId = chatHistory._id;
+        selectedClientId = chatHistory.clientid;
         $http({
             method: "GET",
             url: "/api/chatHistoryById/" + chatHistory._id
@@ -52,8 +54,13 @@ function adminCtrl($http, mySocket) {
         if (message && message !== '' && agentname) {
             console.log('aa');
             //target 설정이 필요함 서버로 emit 만 되고 타겟에 대한 socket 을 다시 날림
-            mySocket.emit("send message to client", {message: message, agentname: agentname}, function (res) {
-                console.log(res);
+            mySocket.emit("send message to client", {
+                clientid: selectedClientId,
+                message: message,
+                agentname: agentname,
+                chathistoryid: chatHistoryId
+            }, function (res) {
+                vm.messages.push(res);
             });
         }
     };
@@ -77,7 +84,7 @@ function adminCtrl($http, mySocket) {
             mySocket.on("receive message from client", function (data) {
                 console.log(data);
                 console.log(vm.chatHistoryId + " and " + data.chathistoryid);
-                if (vm.chatHistoryId == data.chathistoryid) {
+                if (chatHistoryId == data.chathistoryid) {
                     vm.messages.push(data);
                 }
 

@@ -78,19 +78,22 @@ nameSpaces.forEach(function (nsp) {
                 clientid = client.id.split('#')[1];
             }
 
+            client.clientid = clientid;
+
             var chatHistory = {
                 channel: data.channel,
                 clientid: clientid,
                 username: data.username
             };
 
-            console.log("before created");
             chatController.create(chatHistory, function(err, chatHistory){
                 console.log("after created");
                 if (err) {
                     console.log(err);
                 }
                 client.chathistoryid = chatHistory._id;
+                users[client.chathistoryid] = client;
+
                 io.emit('client connected', chatHistory);
                 if (next) {
                     next(data);
@@ -130,15 +133,15 @@ nameSpaces.forEach(function (nsp) {
         client.on('disconnect', function () {
             //사용자의 접속이 완료됨
 
-            chatController.finishChat(client.chathistoryid, function() {});
-            console.log(client.id);
-            var info;
-            if (users[client.id]) {
-                info = users[client.id].info;
-            }
-            io.emit('client disconnected', info);
-            delete users[client.id];
-            client.broadcast.to(Room).json.send({msg: "Se desconecto"});
+            chatController.finishChat(client.chathistoryid, function() {
+                delete users[client.id];
+            });
+
+
+
+            //관련 어드민에게만 보내야함
+            io.emit('client disconnected', {});
+
         });
     });
     // nameSpace.emit('waiting', 'everyone!');
@@ -153,17 +156,33 @@ io.sockets.on('connection', function (client) {
 
     client.on("send message to client", function (data, next) {
         //data 에 있는 target 정보를 통해서 emit 해야함
-        console.log('send message');
-        console.log(io.of('/syno'));
-        io.of('/syno').emit('admin:connect agent', data);
+
+        var chat = {
+            username: data.agentname,
+            message: data.message,
+            chathistoryid: data.chathistoryid
+        };
+
+        chatController.addChat(chat, function(err, chat){
+            console.log(chat);
+            if (err) {
+                console.log(err);
+            }
+            if (users[data.chathistoryid]) {
+                users[data.chathistoryid].emit('receive message from agent', chat);
+            }
+
+            console.log("send message to client");
+            if (next) {
+                next(chat);
+            }
+
+        });
+        //io.of('/syno').sockets[data.selectedClientId].emit('admin:connect agent', data);
         // mySocket.on("admin:connect agent", function(res) {
         //     pushMessages(res.username, "'님'과 상담을 시작합니다.");
         // });
 
-        console.log("send message");
-        if (next) {
-            next(data);
-        }
     });
 
 
