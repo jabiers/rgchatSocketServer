@@ -47,7 +47,7 @@ if(typeof tpOnce=="undefined"){
         var clientiFrame=document.createElement('iframe');
         clientiFrame.style.width='100%';
         clientiFrame.style.height='100%';
-        clientiFrame.src='/client?token=' + rgchatAdviceToken;
+        clientiFrame.src='http://rgchatsocketserver.azurewebsites.net/client?token=' + rgchatAdviceToken;
         clientiFrame.frameBorder=0;
         rgchatClientWindow.appendChild(clientiFrame);
 
