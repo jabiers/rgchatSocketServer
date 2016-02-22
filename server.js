@@ -67,8 +67,10 @@ app.use('/api', require('./routes/apiRoute'));
 // Socket IO Setting
 //---------------------------------------------
 
-var redis = require('socket.io-redis');
-io.adapter(redis({host: '13.75.93.240', port: 6379}));
+if (!process.env.noredis) {
+    var redis = require('socket.io-redis');
+    io.adapter(redis({host: '13.75.93.240', port: 6379}));
+}
 
 var nameSpaces = ['/aaaa', '/bbbb', '/syno'];
 var users = {};
