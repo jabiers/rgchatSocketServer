@@ -25,7 +25,7 @@ var express = require('express'),
 //    console.log('Mongoose default connection disconnected');
 //});
 //
-mongoose.connect('mongodb://localhost/rgchat', function(err) {
+mongoose.connect('mongodb://13.75.93.240/rgchat', function(err) {
     console.log(err);
 });
 
@@ -68,7 +68,7 @@ app.use('/api', require('./routes/apiRoute'));
 //---------------------------------------------
 
 var redis = require('socket.io-redis');
-io.adapter(redis({host: 'syno.ml', port: 6379}));
+io.adapter(redis({host: '13.75.93.240', port: 6379}));
 
 var nameSpaces = ['/aaaa', '/bbbb', '/syno'];
 var users = {};
