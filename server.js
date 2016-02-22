@@ -25,7 +25,7 @@ var express = require('express'),
 //    console.log('Mongoose default connection disconnected');
 //});
 //
-mongoose.connect('mongodb://13.75.93.240/rgchat', function(err) {
+mongoose.connect('mongodb://mongodb.rgchat.net/rgchat', function(err) {
     console.log(err);
 });
 
@@ -69,7 +69,7 @@ app.use('/api', require('./routes/apiRoute'));
 
 if (!process.env.noredis) {
     var redis = require('socket.io-redis');
-    io.adapter(redis({host: '13.75.93.240', port: 6379}));
+    io.adapter(redis({host: 'redis.rgchat.net', port: 6379}));
 }
 
 var nameSpaces = ['/aaaa', '/bbbb', '/syno'];
