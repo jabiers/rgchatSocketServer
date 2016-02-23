@@ -17,7 +17,7 @@ var ChatHistorySchema = new Schema({
         type: Date,
         default: Date.now
     },
-    channelId: {
+    channelid: {
         type: Schema.ObjectId,
         ref: 'Channel'
     },

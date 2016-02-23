@@ -23,6 +23,10 @@ var ChatSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'ChatHistory'
     },
+    channelid: {
+        type:Schema.ObjectId,
+        ref: 'Channel'
+    },
     message: {
         type: String,
         required: true,

@@ -1,4 +1,4 @@
-var chatController = require('./server/controllers/chatHistory.Controller');
+var chatController = require('./chatHistory.Controller');
 
 module.exports = function (client) {
 
@@ -11,7 +11,8 @@ module.exports = function (client) {
         var chat = {
             username: data.agentname,
             message: data.message,
-            chathistoryid: data.chathistoryid
+            chathistoryid: data.chathistoryid,
+            channelid: data.channelid
         };
 
         chatController.addChat(chat, function(err, chat){

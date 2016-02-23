@@ -77,7 +77,7 @@ var users = {};
 
 io.sockets.on('connection', function (client) {
     require('./server/controllers/clientSocket.Controller')(io, client, users);
-    require('.server/controllers/agentSocket.Controller')(io, client, users);
+    require('./server/controllers/agentSocket.Controller')(io, client, users);
 });
 
 http.listen(port);

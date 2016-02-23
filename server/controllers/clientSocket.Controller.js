@@ -1,16 +1,18 @@
-var chatController = require('./server/controllers/chatHistory.Controller');
+var chatController = require('./chatHistory.Controller');
 
 module.exports = function (io, client, users) {
     client.on("client connected", function (data, next) {
         //사용자가 접속했다는 정보를 받음
         //msg = {message: message, username:username}
 
-        client.clientid = clientid;
+        client.clientid = client.id;
+        client.username = data.username;
+        client.channelid = data.channelid;
 
         var chatHistory = {
-            channelId: data.channelId,
-            clientid: clientid,
-            username: data.username
+            channelid: client.channelid,
+            clientid: client.clientid,
+            username: client.username
         };
 
         chatController.create(chatHistory, function(err, chatHistory){
@@ -32,8 +34,13 @@ module.exports = function (io, client, users) {
         //글만 남겼을 경우?
         //연결된 상담원이 있을 경우?
         // {message: message, username:username}
+        client.clientid = client.id;
+        if (data.username) {
+            client.username = data.username;
+        }
 
         var chat = {
+            channelid:client.channelid,
             username: data.username,
             message: data.message,
             chathistoryid: client.chathistoryid
