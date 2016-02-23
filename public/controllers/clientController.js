@@ -38,7 +38,7 @@ function clientCtrl($location, $filter, mySocket) {
 
     function socketConnect(next) {
         if (!socketConnected) {
-            socket = mySocket.connect('/' + token);
+            socket = mySocket.connect();
             socketConnected = true;
 
             mySocket.emit("client connected", {channelId: token, username: vm.username}, next);

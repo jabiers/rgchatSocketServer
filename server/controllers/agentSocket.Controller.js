@@ -27,7 +27,6 @@ module.exports = function (client) {
             if (next) {
                 next(chat);
             }
-
         });
         //io.of('/syno').sockets[data.selectedClientId].emit('admin:connect agent', data);
         // mySocket.on("admin:connect agent", function(res) {
@@ -38,7 +37,7 @@ module.exports = function (client) {
 
 
     //-------------------------------- 일단 사용안함  --------------------------------
-    
+
     //
     // client.on("get connected users", function (data, next) {
     //     //연결된 사용자 정보를 업데이트 한다.
