@@ -24,10 +24,15 @@ var express = require('express'),
 //mongoose.connection.on('disconnected', function () {
 //    console.log('Mongoose default connection disconnected');
 //});
-//
-mongoose.connect('mongodb://mongodb.rgchat.net/rgchat', function(err) {
+
+
+//mongoose.connect('mongodb://mongodb.rgchat.net/rgchat', function(err) {
+//    console.log(err);
+//});
+mongoose.connect('mongodb://localhost/rgchat', function(err) {
     console.log(err);
 });
+
 
 var chatController = require('./server/controllers/chatHistory.Controller');
 

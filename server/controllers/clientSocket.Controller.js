@@ -15,17 +15,18 @@ module.exports = function (io, client, users) {
             username: client.username
         };
 
-        chatController.create(chatHistory, function(err, chatHistory){
+        chatController.create(chatHistory, function (err, chatHistory) {
             console.log("after created");
             if (err) {
                 console.log(err);
-            }
-            client.chathistoryid = chatHistory._id;
-            users[client.chathistoryid] = client;
+            } else {
+                client.chathistoryid = chatHistory._id;
+                users[client.chathistoryid] = client;
 
-            io.emit('client connected', chatHistory);
-            if (next) {
-                next(data);
+                io.emit('client connected', chatHistory);
+                if (next) {
+                    next(data);
+                }
             }
         });
     });
@@ -40,13 +41,13 @@ module.exports = function (io, client, users) {
         }
 
         var chat = {
-            channelid:client.channelid,
+            channelid: client.channelid,
             username: data.username,
             message: data.message,
             chathistoryid: client.chathistoryid
         };
 
-        chatController.addChat(chat, function(err, chat){
+        chatController.addChat(chat, function (err, chat) {
             console.log(chat);
             console.log("asdfljksfdjklsdf");
             if (err) {
@@ -66,10 +67,9 @@ module.exports = function (io, client, users) {
     client.on('disconnect', function () {
         //사용자의 접속이 완료됨
 
-        chatController.finishChat(client.chathistoryid, function() {
+        chatController.finishChat(client.chathistoryid, function () {
             delete users[client.id];
         });
-
 
 
         //관련 어드민에게만 보내야함
