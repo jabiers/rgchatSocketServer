@@ -29,7 +29,7 @@ var express = require('express'),
 //mongoose.connect('mongodb://mongodb.rgchat.net/rgchat', function(err) {
 //    console.log(err);
 //});
-mongoose.connect('mongodb://localhost/rgchat', function(err) {
+mongoose.connect('mongodb://syno.ml/rgchat', function(err) {
     console.log(err);
 });
 
